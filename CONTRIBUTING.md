@@ -1,60 +1,60 @@
 # Contributing to Shortly
 
-Спасибо за желание внести вклад в развитие проекта! Этот документ описывает правила и ожидания для контрибьюторов, чтобы поддерживать качество и согласованность кода в проекте.
+Thank you for your interest in contributing to the project! This document outlines the rules and expectations for contributors to maintain code quality and consistency.
 
-## Основные принципы
-- Будьте вежливы и уважительны. Открытая и конструктивная коммуникация приветствуется.
-- Одна логическая задача — один pull request.
-- Маленькие PR принимаются быстрее — разбивайте большие изменения.
+## Core Principles
+- Be polite and respectful. Open and constructive communication is encouraged.
+- One logical change per pull request.
+- Smaller PRs get reviewed faster вЂ” break down large changes.
 
-## Как начать
-1. Форкните репозиторий и создайте ветку с осмысленным именем: `feature/<краткое-описание>` или `fix/<краткое-описание>`.
-2. Сделайте изменения в новой ветке.
-3. Прогоните тесты локально.
-4. Откройте Pull Request в ветку `master` с описанием целей и кратким гайдлайном по изменениям.
+## Getting Started
+1. Fork the repository and create a branch with a meaningful name: `feature/<brief-description>` or `fix/<brief-description>`.
+2. Make your changes in the new branch.
+3. Run tests locally.
+4. Open a Pull Request to the `master` branch with a clear description and summary of changes.
 
-## Стиль кодирования и форматирование
-- Проект использует `.editorconfig` (в корне проекта). Пожалуйста, следуйте его правилам. Основные моменты:
-  - 4 пробела для отступов
-  - LF окончания строк
-  - Имена интерфейсов с префиксом `I`
-  - Приватные поля с префиксом `_` и camelCase
-  - Публичные члены в PascalCase
-- Включите __Format Document__ или запустите `dotnet format` перед коммитом.
-- Включите nullable reference types в новых файлах по возможности.
+## Code Style & Formatting
+- The project uses `.editorconfig` (in the root). Please follow its rules. Key points:
+  - 4-space indentation
+  - LF line endings
+  - Interface names prefixed with `I`
+  - Private fields use `_` prefix and camelCase
+  - Public members use PascalCase
+- Run **Format Document** or `dotnet format` before committing.
+- Enable nullable reference types in new files where possible.
 
-## Соглашения по коммитам
-- Пишите осмысленные сообщения коммитов. Рекомендуется формат:
-  - `feat: добавляет новую функциональность`
-  - `fix: исправляет баг`
-  - `chore: технические изменения, не влияющие на поведение`
+## Commit Conventions
+- Write meaningful commit messages. Recommended format:
+  - `feat: adds new functionality`
+  - `fix: resolves a bug`
+  - `chore: technical changes without behavioral impact`
 
 ## Pull Requests
-- PR должен содержать описание проблемы, краткое описание решения и указание, как протестировать изменения.
-- PR проверяются CI. Не принимайте PR с падающими сборками.
-- Просите ревью у минимум одного участника проекта.
+- PRs must include: problem description, solution summary, and testing instructions.
+- PRs are validated by CI. Do not merge failing PRs.
+- Request reviews from at least one project member.
 
-## Тестирование
-- Добавляйте unit-тесты для новой логики.
-- Для интеграционных тестов используйте in-memory SQLite или Testcontainers.
-- В CI должны выполняться: `dotnet build`, `dotnet test`, `dotnet format --verify-no-changes` и статический анализ.
+## Testing
+- Add unit tests for new logic.
+- Use in-memory SQLite or Testcontainers for integration tests.
+- CI must run: `dotnet build`, `dotnet test`, `dotnet format --verify-no-changes`, and static analysis.
 
-## База данных и миграции
-- Миграции управляются через EF Core (`dotnet ef migrations add` / `dotnet ef database update`).
-- Миграции добавляются в отдельной ветке и проходят ревью.
-- В продакшне миграции применяются через CI/CD pipeline; не вызывайте `Database.Migrate()` автоматически без обсуждения.
+## Database & Migrations
+- Migrations are managed via EF Core (`dotnet ef migrations add` / `dotnet ef database update`).
+- Migrations must be reviewed in a separate branch.
+- Production migrations are applied via CI/CD pipeline; avoid automatic `Database.Migrate()` without discussion.
 
-## Секреты и конфигурация
-- В локальной разработке используйте __User Secrets__ (`dotnet user-secrets`) и файл `.env` для простоты, не коммитите секреты.
-- В продакшне используйте безопасный хранилище секретов (Azure Key Vault, AWS Secrets Manager и т.д.).
+## Secrets & Configuration
+- Use **User Secrets** (`dotnet user-secrets`) and `.env` files locally вЂ” never commit secrets.
+- Use secure secret storage in production (Azure Key Vault, AWS Secrets Manager, etc.).
 
 ## CI/CD
-- CI должен запускать сборку, тесты и статический анализ на каждом PR.
-- CD должно применять миграции и выкатывать артефакты только после успешного прохождения тестов и ревью.
+- CI must run builds, tests, and static analysis on every PR.
+- CD should deploy artifacts and apply migrations only after successful tests and review.
 
-## Безопасность
-- Проверяйте внешние зависимости на уязвимости.
-- Не оставляйте `AllowAnyOrigin` и другие небезопасные политики в продакшне.
+## Security
+- Audit external dependencies for vulnerabilities.
+- Avoid unsafe policies like `AllowAnyOrigin` in production.
 
-## Контакты
-Если есть вопросы — открывайте issue или напишите автору репозитория.
+## Contacts
+Open an issue or contact the repository owner with questions.
