@@ -1,4 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using System.Text.Json.Serialization;
 
 namespace url_shortener.Models
@@ -18,7 +18,7 @@ namespace url_shortener.Models
     [Index(nameof(IsActive))]
     public class Url
     {
-        public required int Id { get; set; }
+        public int Id { get; set; }
         public required string OriginalUrl { get; set; }
         public required string ShortCode { get; set; }
         public int CreatorId { get; set; }

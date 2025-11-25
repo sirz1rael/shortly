@@ -1,4 +1,4 @@
-﻿using url_shortener.Models;
+using url_shortener.Models;
 
 namespace url_shortener.Database
 {
@@ -43,7 +43,5 @@ namespace url_shortener.Database
         Task IncrementClickCountAsync(int urlId);
         Task<bool> CleanupExpiredUrlsAsync();
         Task<int> GetActiveUrlsCountAsync();
-
-
     }
 }

@@ -1,8 +1,11 @@
-using url_shortener.Database;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Data.Sqlite;
-using url_shortener.Models;
+using Microsoft.EntityFrameworkCore;
+
 using Swashbuckle.AspNetCore.SwaggerGen;
+
+using url_shortener.Database;
+using url_shortener.Models;
+using url_shortener.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -44,6 +47,10 @@ builder.Services.AddSwaggerGen(c =>
 
 // Repositories
 builder.Services.AddScoped<IUserRepository, UserRepository>();
+builder.Services.AddScoped<IUrlRepository, UrlRepository>();
+
+builder.Services.AddScoped<IUrlService, UrlService>();
+builder.Services.AddScoped<IShortCodeGenerator, ShortCodeGenerator>();
 builder.Services.AddScoped<IUrlRepository, UrlRepository>();
 
 // CORS Configuration
@@ -91,7 +98,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI(c =>
     {
         c.SwaggerEndpoint("/swagger/v1/swagger.json", "URL Shortener API v1");
-        c.RoutePrefix = "docs"; // Доступ по /docs
+        c.RoutePrefix = "docs"; // Р”РѕСЃС‚СѓРї РїРѕ /docs
         c.DocumentTitle = "URL Shortener API Documentation";
     });
 }
