@@ -8,8 +8,23 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers();
 
-builder.Services.AddDbContext<AppDbContext>(options =>
-    options.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection")));
+{
+    var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") ?? new SqliteConnectionStringBuilder
+    {
+        DataSource = "shortly.db"
+    }.ToString();
+
+    builder.Services.AddDbContextPool<AppDbContext>(options =>
+    {
+        options.UseSqlite(connectionString);
+        if (builder.Environment.IsDevelopment())
+        {
+            options.EnableSensitiveDataLogging();
+            options.EnableDetailedErrors();
+        }
+    });
+
+}
 
 builder.Services.AddOpenApi();
 builder.Services.AddSwaggerGen(c =>
@@ -27,21 +42,35 @@ builder.Services.AddSwaggerGen(c =>
     });
 });
 
+// Repositories
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<IUrlRepository, UrlRepository>();
 
-
-
-builder.Services.AddCors(options =>
+// CORS Configuration
+if (builder.Environment.IsDevelopment())
 {
-    options.AddPolicy("AllowAll", policy =>
+    builder.Services.AddCors(options =>
     {
-        policy.AllowAnyOrigin()
-              .AllowAnyMethod()
-              .AllowAnyHeader();
+        options.AddPolicy("AllowAll", policy =>
+        {
+            policy.AllowAnyOrigin()
+                  .AllowAnyMethod()
+                  .AllowAnyHeader();
 
+        });
     });
-});
+} else if (builder.Environment.IsProduction())
+{
+    builder.Services.AddCors(options =>
+    {
+        options.AddPolicy("AllowAll", policy =>
+        {
+            policy.WithOrigins("https://your-production-domain.com") // Use your production domain
+                  .AllowAnyMethod()
+                  .AllowAnyHeader();
+        });
+    });
+}
 
 var app = builder.Build();
 
@@ -65,11 +94,9 @@ if (app.Environment.IsDevelopment())
         c.RoutePrefix = "docs"; // Доступ по /docs
         c.DocumentTitle = "URL Shortener API Documentation";
     });
-
-
 }
 
-app.UseCors("AllowAll");
+app.UseCors();
 app.UseHttpsRedirection();
 app.UseAuthorization();
 app.MapControllers();
