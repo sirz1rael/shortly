@@ -29,6 +29,7 @@ namespace url_shortener.Models
         public DateTime? PasswordResetTokenExpires { get; set; }
         [MaxLength(127)]
         public required string Username { get; set; }
+        [JsonIgnore]
         public ICollection<Url> CreatedUrls { get; set; } = null!;
         public int UrlCount { get; set; } = 0;
         public int MaxUrlsPerDay { get; set; } = 3; // TODO(): Remove it from here and place it into Permissions of user role

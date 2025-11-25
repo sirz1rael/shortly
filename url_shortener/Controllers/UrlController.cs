@@ -5,12 +5,8 @@ namespace url_shortener.Controllers
 {
     [ApiController]
     [Route("[controller]")]
-    public class UrlController : ControllerBase
+    public class UrlController(IUrlRepository repository) : ControllerBase
     {
-        private readonly IUrlRepository _repository;
-        public UrlController(IUrlRepository repository) 
-        { 
-            _repository = repository;
-        }
+        private readonly IUrlRepository _repository = repository;
     }
 }

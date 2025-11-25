@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using System.Text.Json.Serialization;
 
 namespace url_shortener.Models
 {
@@ -44,7 +45,7 @@ namespace url_shortener.Models
         public DateTime? LastClickAt { get; set; }
 
         public string? PeakActivityHour { get; set; }
-
+        [JsonIgnore]
         public ICollection<Click> Clicks { get; set; } = new List<Click>();
 
     }

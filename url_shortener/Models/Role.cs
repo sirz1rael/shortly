@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Text.Json.Serialization;
 
 namespace url_shortener.Models
 {
@@ -40,13 +41,13 @@ namespace url_shortener.Models
             get => RoleSerializer.ToString(_roleType);
             set => _roleType = RoleSerializer.FromString(value);
         }
+        [JsonIgnore]
         public IEnumerable<User> AssignedTo { get; set; } = null!;
 
         [MaxLength(255)]
         public string Description { get; set; } = string.Empty;
 
+        [JsonIgnore]
         public List<string> Permissions { get; set; } = [];
-        public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
-        public DateTime UpdatedAt { get; set; } = DateTime.UtcNow;
     }
 }

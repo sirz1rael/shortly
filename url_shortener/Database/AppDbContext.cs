@@ -52,7 +52,7 @@ namespace url_shortener.Database
                 entity.Property(e => e.PasswordHash).IsRequired();
                 entity.Property(e => e.Email).IsRequired().HasMaxLength(200);
                 entity.Property(e => e.PublicId).IsRequired().HasMaxLength(64);
-                entity.Property(e => e.RoleId).IsRequired().HasDefaultValue("USER");
+                entity.Property(e => e.RoleId).IsRequired().HasDefaultValue(0);
 
                 entity.HasIndex(e => e.PublicId).IsUnique();
                 entity.HasIndex(e => e.Email).IsUnique();
