@@ -25,8 +25,8 @@ git clone https://github.com/sirz1rael/shortly.git cd shortly
 2. Настройте строку подключения в `appsettings.Development.json` или через __User Secrets__:
 ```json
 {
-"ConnectionStrings": { 
-	"DefaultConnection": "Data Source=shortly.db" 
+	"ConnectionStrings": { 
+		"DefaultConnection": "Data Source=shortly.db" 
 	} 
 }
 ```
